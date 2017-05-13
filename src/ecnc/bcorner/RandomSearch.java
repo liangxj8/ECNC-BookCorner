@@ -46,7 +46,7 @@ public class RandomSearch {
 
   public int getCount() {
     try {
-      String url = "jdbc:mysql://localhost:3306/" + databaseName;
+      String url = "jdbc:mysql://localhost:3306/" + databaseName + "?characterEncoding=utf8&useSSL=true";
       con = DriverManager.getConnection(url, "root", "Administrator");
       sql = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
       resulet = sql.executeQuery("SELECT * FROM " + tableName);
@@ -62,7 +62,7 @@ public class RandomSearch {
   public StringBuffer getRandomQueryResult() {
     randomQueryResult = new StringBuffer();
     try {
-      String url = "jdbc:mysql://localhost:3306/" + databaseName;
+      String url = "jdbc:mysql://localhost:3306/" + databaseName + "?characterEncoding=utf8&useSSL=true";
       con = DriverManager.getConnection(url, "root", "Administrator");
       DatabaseMetaData metadata = con.getMetaData();
       ResultSet resulet1 = metadata.getColumns(null, null, tableName, null);

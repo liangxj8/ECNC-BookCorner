@@ -32,7 +32,7 @@ public class QuickSearch {
       tableResult = e.toString();
     }
     try {
-      String url = "jdbc:mysql://localhost:3306/bcorner";
+      String url = "jdbc:mysql://localhost:3306/bcorner?characterEncoding=utf8&useSSL=true";
       String user = "root";
       String password = "Administrator";
       con = DriverManager.getConnection(url, user, password);
