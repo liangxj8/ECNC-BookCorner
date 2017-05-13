@@ -35,10 +35,6 @@
         response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
         response.setHeader("Location","/bcorner/index.jsp?error=1");
       }
-    } else if (session.getAttribute("name") == null) {
-      session.setAttribute("logout", "1");
-      response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-      response.setHeader("Location","/bcorner/index.jsp?error=1");
     } else {
       session.setAttribute("logout", "1");
       response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
