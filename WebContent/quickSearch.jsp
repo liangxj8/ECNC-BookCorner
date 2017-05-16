@@ -2,7 +2,6 @@
   pageEncoding="UTF-8"%>
 <%
   if ("1".equals(session.getAttribute("logout")) || session.getAttribute("name") == null) {
-    session.setAttribute("logout", "1");
     response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
     response.setHeader("Location", "/bcorner");
   }

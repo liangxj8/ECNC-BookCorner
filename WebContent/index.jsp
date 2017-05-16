@@ -5,15 +5,9 @@
     session.setAttribute("logout", "1");
   }
   if ("0".equals(session.getAttribute("logout")) && session.getAttribute("name") != null) {
-    if ("管理员".equals(session.getAttribute("privilege"))) {
-%>
-<jsp:forward page="book.jsp" />
-<%
-    } else {
 %>
 <jsp:forward page="user.jsp" />
 <%
-    }
   }
 %>
 <!DOCTYPE html>
