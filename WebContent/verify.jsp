@@ -25,6 +25,7 @@
     rs = sql.executeQuery("SELECT * from users where userAccount=\"" + userAccount + "\"");
     if (rs.next()) {
       if (userPassword.equals(rs.getString(3))) {
+        session.setAttribute("uid", rs.getString(1));
         session.setAttribute("name", rs.getString(4));
         session.setAttribute("privilege", rs.getString(5));
         session.setAttribute("logout", "0");
