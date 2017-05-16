@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
-<%@ page import="ecnc.bcorner.Corner" %>
+<%
+  if ("1".equals(session.getAttribute("logout")) || session.getAttribute("name") == null) {
+    session.setAttribute("logout", "1");
+    response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+    response.setHeader("Location","/bcorner");
+  }
+%>
+<%@ page import="ecnc.bcorner.Corner"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="zh-CN">
 <head>
@@ -21,27 +28,11 @@
     <div class="row clearfix">
       <div class="col-md-12 column">
         <jsp:include page="navbar.jsp" />
-        <div class="row clearfix">
-          <div class="col-md-12 column">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th style='text-align: center'>编号</th>
-                  <th style='text-align: center'>ISBN</th>
-                  <th style='text-align: center'>书名</th>
-                  <th style='text-align: center'>作者</th>
-                  <th style='text-align: center'>出版社</th>
-                  <th style='text-align: center'>状态</th>
-                </tr>
-              </thead>
-              <tbody>
-                <jsp:useBean id="Corner"
-                  class="ecnc.bcorner.Corner" scope="request" />
-                <jsp:getProperty name="Corner" property="tableResult" />
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <table class="table table-striped">
+          <jsp:useBean id="Corner" class="ecnc.bcorner.Corner"
+            scope="request" />
+          <jsp:getProperty name="Corner" property="tableResult" />
+        </table>
       </div>
     </div>
   </div>
