@@ -2,7 +2,6 @@
   pageEncoding="UTF-8"%>
 <%
   if ("1".equals(session.getAttribute("logout")) || session.getAttribute("name") == null) {
-    session.setAttribute("logout", "1");
     response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
     response.setHeader("Location", "/bcorner");
   }
@@ -20,7 +19,7 @@
       <li><a href="/bcorner/user-management.jsp">用户管理</a></li>
     </ul>
     <form class="navbar-form navbar-left" role="search"
-      action="book.jsp">
+      action="borrow.jsp">
       <%
         } else {
       %>
