@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
+<%
+  if ("1".equals(session.getAttribute("logout")) || session.getAttribute("name") == null) {
+    session.setAttribute("logout", "1");
+    response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+    response.setHeader("Location", "/bcorner");
+  }
+%>
 <%@ page import="ecnc.bcorner.QuickSearch"%>
 <%@ page import="ecnc.bcorner.RandomSearch"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -20,48 +27,32 @@
 <body>
   <div class="container">
     <div class="row clearfix">
-      <div class="col-md-12 column">        
+      <div class="col-md-12 column">
         <jsp:include page="navbar.jsp" />
         <div class="row clearfix">
           <div class="col-md-12 column">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th style='text-align: center'>编号</th>
-                  <th style='text-align: center'>ISBN</th>
-                  <th style='text-align: center'>书名</th>
-                  <th style='text-align: center'>作者</th>
-                  <th style='text-align: center'>出版社</th>
-                  <th style='text-align: center'>状态</th>
-                </tr>
-              </thead>
-              <tbody>
-                <%
-                  String keyword = "";
-                  keyword += request.getParameter("keyword");
-                  if (keyword.length() != 0) {
-                    String SQLstring = "SELECT * FROM books WHERE name like '%" + keyword 
-                        + "%' OR author like '%" + keyword + "%' OR press like '%" + keyword
-                        + "%' OR ISBN like '%" + keyword + "%'";
-                %>
-                <jsp:useBean id="QuickSearch"
-                  class="ecnc.bcorner.QuickSearch" scope="request" />
-                <jsp:setProperty name="QuickSearch" property="SQLstring"
-                  value="<%=SQLstring%>" />
-                <jsp:getProperty name="QuickSearch"
-                  property="tableResult" />
-                <%
-                  } else {
-                %>
-                <jsp:useBean id="RandomSearch"
-                  class="ecnc.bcorner.RandomSearch" scope="request" />
-                <jsp:getProperty name="RandomSearch"
-                  property="randomQueryResult" />
-                <%
-                  }
-                %>
-              </tbody>
-            </table>
+            <%
+              String keyword = "";
+              keyword += request.getParameter("keyword");
+              if (keyword.length() != 0) {
+                String SQLstring = "SELECT * FROM books WHERE name like '%" + keyword + "%' OR author like '%" + keyword
+                    + "%' OR press like '%" + keyword + "%' OR ISBN like '%" + keyword + "%'";
+            %>
+            <jsp:useBean id="QuickSearch"
+              class="ecnc.bcorner.QuickSearch" scope="request" />
+            <jsp:setProperty name="QuickSearch" property="SQLstring"
+              value="<%=SQLstring%>" />
+            <jsp:getProperty name="QuickSearch" property="tableResult" />
+            <%
+              } else {
+            %>
+            <jsp:useBean id="RandomSearch"
+              class="ecnc.bcorner.RandomSearch" scope="request" />
+            <jsp:getProperty name="RandomSearch"
+              property="randomQueryResult" />
+            <%
+              }
+            %>
           </div>
         </div>
       </div>

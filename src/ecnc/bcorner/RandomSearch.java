@@ -67,11 +67,17 @@ public class RandomSearch {
       DatabaseMetaData metadata = con.getMetaData();
       ResultSet resulet1 = metadata.getColumns(null, null, tableName, null);
       int attributeNum = 0;
-      randomQueryResult.append("<tr>");
       while (resulet1.next()) {
         attributeNum++;
       }
-      randomQueryResult.append("</tr>");
+      randomQueryResult.append("<table class=\"table table-striped\"><thead><tr>");
+      randomQueryResult.append("<th style='text-align: center'>编号</th>");
+      randomQueryResult.append("<th style='text-align: center'>ISBN</th>");
+      randomQueryResult.append("<th style='text-align: center'>书名</th>");
+      randomQueryResult.append("<th style='text-align: center'>作者</th>");
+      randomQueryResult.append("<th style='text-align: center'>出版社</th>");
+      randomQueryResult.append("<th style='text-align: center'>状态</th>");
+      randomQueryResult.append("</tr></thead><tbody>");
 
       sql = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
       resulet = sql.executeQuery("SELECT * FROM " + tableName);
@@ -102,7 +108,8 @@ public class RandomSearch {
         randomQueryResult.append("</tr>");
         selectNum--;
         vector.removeElementAt(i); // 将抽取过的元素从向量中删除
-      }
+      }      
+      randomQueryResult.append("</tbody></table>");
       con.close();
     } catch (SQLException e) {
       randomQueryResult.append(e);

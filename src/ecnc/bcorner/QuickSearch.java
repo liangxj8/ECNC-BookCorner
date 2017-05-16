@@ -38,6 +38,14 @@ public class QuickSearch {
       con = DriverManager.getConnection(url, user, password);
       sql = con.createStatement();
       result = sql.executeQuery(SQLstring);
+      tableResult += "<table class=\"table table-striped\"><thead><tr>";
+      tableResult += "<th style='text-align: center'>编号</th>";
+      tableResult += "<th style='text-align: center'>ISBN</th>";
+      tableResult += "<th style='text-align: center'>书名</th>";
+      tableResult += "<th style='text-align: center'>作者</th>";
+      tableResult += "<th style='text-align: center'>出版社</th>";
+      tableResult += "<th style='text-align: center'>状态</th>";
+      tableResult += "</tr></thead><tbody>";
       if (result.next()) {
         if (result.getInt(6) == 1) {
           tableResult += "<tr>";
@@ -77,7 +85,7 @@ public class QuickSearch {
         }
         tableResult += "</tr>";
       }
-
+      tableResult += "</tbody></table>";
       con.close();
     } catch (SQLException e1) {
       tableResult = e1.toString();
