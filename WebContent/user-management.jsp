@@ -2,7 +2,6 @@
   pageEncoding="UTF-8"%>
 <%
   if ("1".equals(session.getAttribute("logout")) || session.getAttribute("name") == null) {
-    session.setAttribute("logout", "1");
     response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
     response.setHeader("Location", "/bcorner");
   }
@@ -12,7 +11,7 @@
 <%
   }
 %>
-<%@ page import="ecnc.bcorner.user"%>
+<%@ page import="ecnc.bcorner.userManagement"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="zh-CN">
 <head>
@@ -37,9 +36,9 @@
       <div class="col-md-2 column"></div> 
       <div class="col-md-6 column">
         <table class="table table-striped">
-          <jsp:useBean id="user" class="ecnc.bcorner.user"
+          <jsp:useBean id="userManagement" class="ecnc.bcorner.userManagement"
             scope="request" />
-          <jsp:getProperty name="user" property="tableResult" />
+          <jsp:getProperty name="userManagement" property="tableResult" />
         </table>
       </div>
       <div class="col-md-4 column">
