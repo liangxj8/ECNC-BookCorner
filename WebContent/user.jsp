@@ -2,12 +2,12 @@
   pageEncoding="UTF-8"%>
 <%
   if ("1".equals(session.getAttribute("logout")) || session.getAttribute("name") == null) {
-    session.setAttribute("logout", "1");
     response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
     response.setHeader("Location", "/bcorner");
   }
 %>
-<%@ page import="ecnc.bcorner.Corner"%>
+<%@ page import="ecnc.bcorner.userCenter"%>
+<%@ page import="ecnc.bcorner.returnBook"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="zh-CN">
 <head>
@@ -28,7 +28,8 @@
     <div class="row clearfix">
       <div class="col-md-12 column">
         <jsp:include page="navbar.jsp" />
-        <div id="myCarousel" class="carousel slide" style="margin-bottom: 20px;">
+        <div id="myCarousel" class="carousel slide"
+          style="margin-bottom: 20px;">
           <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0"
               class="active"></li>
@@ -82,37 +83,45 @@
     <div class="row clearfix">
       <div class="col-md-3 column">
         <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">概览</h3>
-            </div>
-            <ul class="list-group">
-              <li class="list-group-item">
-                <span class="badge" id="total">2</span>
-                历史借书总数
-              </li>
-              <li class="list-group-item">
-                <span class="badge" id="my_total">0</span>
-                待还书数
-              </li>
-            </ul>
+          <div class="panel-heading">
+            <h3 class="panel-title">概览</h3>
           </div>
+          <ul class="list-group">
+            <li class="list-group-item"><span class="badge"
+              id="total">2</span> 历史借书总数</li>
+            <li class="list-group-item"><span class="badge"
+              id="my_total">0</span> 待还书数</li>
+          </ul>
+        </div>
       </div>
       <div class="col-md-6 column">
-        <table class="table">
-          <thead>
-            <tr>
-              <th style='text-align: center'>编号</th>
-              <th style='text-align: center'>书名</th>
-              <th style='text-align: center'>应还时间</th>
-            </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-          </tr>
-          </tbody>
+        <table class="table table-striped">
+          <jsp:useBean id="userCenter" class="ecnc.bcorner.userCenter"
+            scope="request" />
+          <jsp:setProperty name="userCenter" property="privilege"
+            value="<%=session.getAttribute(\"privilege\")%>" />
+          <jsp:setProperty name="userCenter" property="userName"
+            value="<%=session.getAttribute(\"name\")%>" />
+          <jsp:getProperty name="userCenter" property="tableResult" />
         </table>
+        <%
+          if (request.getParameter("bid") != null && "管理员".equals(session.getAttribute("privilege"))) {
+        %>
+        <jsp:useBean id="returnBook" class="ecnc.bcorner.returnBook"
+          scope="request" />
+        <jsp:setProperty name="returnBook" property="bid"
+          value="<%=request.getParameter(\"bid\")%>" />
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-8">
+            <h4>
+              <jsp:getProperty name="returnBook"
+                property="updateMessage" />
+            </h4>
+          </div>
+        </div>
+        <%
+          }
+        %>
       </div>
       <div class="col-md-3 column">
         <div class="panel-group" id="accordion">
@@ -130,15 +139,10 @@
               <a class="panel-title collapsed" data-toggle="collapse"
                 data-parent="#accordion" href="#collapse2">七日内待还书目</a>
             </div>
-            <div id="collapse2"
-              class="panel-collapse collapse">
+            <div id="collapse2" class="panel-collapse collapse">
               <div class="list-group">
-                <a class="list-group-item">
-                  group item 1
-                </a>
-                <a class="list-group-item">
-                  group item 2
-                </a>
+                <a class="list-group-item"> group item 1 </a> <a
+                  class="list-group-item"> group item 2 </a>
               </div>
             </div>
           </div>
